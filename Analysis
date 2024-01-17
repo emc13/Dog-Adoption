@@ -1,1 +1,187 @@
+### Analyzing Adoption rates
+
+1. Adoption rates and whether the dog's adoption profile has tags
+
+SELECT
+  CASE
+    WHEN t.tags IS NULL then 'no_tags'
+    ELSE 'has_tags' END AS tags,
+  COUNTIF(p.status='adopted') num_adopted,
+  COUNT(p.id) total_dogs,
+  ROUND(100*(COUNTIF(p.status='adopted')/COUNT(p.id)),2) percent_adopted,
+  ROUND(100*(COUNTIF(p.status='adoptable')/COUNT(p.id)),2) percent_not_adopted
+FROM `dog-adoption-411418.adoption.dog_profiles` p
+JOIN `dog-adoption-411418.adoption.tags` t
+ON p.id=t.id
+GROUP BY tags
+
+2. Adoption rates and type of dog breed (mixed vs. purebred)
+
+SELECT
+  mixed,
+  COUNTIF(status='adopted') num_adopted,
+  ROUND(100*(COUNTIF(status='adopted')/COUNT(id)),2) percent_adopted
+FROM `dog-adoption-411418.adoption.dog_profiles`
+GROUP BY mixed
+
+3. Adoption rates and dog breed
+
+SELECT
+  primary_breed,
+  COUNTIF(status='adopted') num_adopted,
+  ROUND(100*(COUNTIF(status='adopted')/COUNT(id)),2) percent_adopted,
+  COUNT(id) num_dogs
+FROM `dog-adoption-411418.adoption.dog_profiles`
+GROUP BY primary_breed
+ORDER BY num_adopted DESC
+
+4. Adoption rates and age
+
+SELECT
+  age,
+  COUNTIF(status='adopted') num_adopted,
+  ROUND(100*(COUNTIF(status='adopted')/COUNT(id)),2) percent_adopted,
+  COUNT(id) num_dogs
+FROM `dog-adoption-411418.adoption.dog_profiles`
+GROUP BY age
+ORDER BY num_adopted DESC
+
+5. Adoption rates and gender
+
+SELECT
+  gender,
+  COUNTIF(status='adopted') num_adopted,
+  ROUND(100*(COUNTIF(status='adopted')/COUNT(id)),2) percent_adopted,
+  COUNT(id) num_dogs
+FROM `dog-adoption-411418.adoption.dog_profiles`
+GROUP BY gender
+ORDER BY num_adopted DESC
+
+6. Adoption rates and special needs dogs
+
+SELECT
+  special_needs,
+  COUNTIF(status='adopted') num_adopted,
+  ROUND(100*(COUNTIF(status='adopted')/COUNT(id)),2) percent_adopted,
+  COUNT(id) num_dogs
+FROM `dog-adoption-411418.adoption.dog_profiles
+GROUP BY special_needs
+ORDER BY num_adopted DESC
+
+7. Adoption rates and dog size
+
+SELECT
+  size,
+  COUNTIF(status='adopted') num_adopted,
+  ROUND(100*(COUNTIF(status='adopted')/COUNT(id)),2) percent_adopted,
+  COUNT(id) num_dogs
+FROM `dog-adoption-411418.adoption.dog_profiles`
+GROUP BY size
+ORDER BY num_adopted DESC
+
+8. States and adoption rates
+
+
+### Analyzing Adoption times (how long it takes for a dog to be adopted)
+
+
+1. Adoption time and profile tags
+
+SELECT
+  CASE
+    WHEN t.tags IS NULL then 'no_tags'
+    ELSE 'has_tags' END AS tags,
+ ROUND(AVG(p.adoption_time_min/60),2) avg_adoption_time_hr,
+ ROUND(AVG(p.adoption_time_min/1440),2) avg_adoption_time_day
+FROM `dog-adoption-411418.adoption.dog_profiles` p
+JOIN `dog-adoption-411418.adoption.tags` t
+ON p.id=t.id
+WHERE p.status='adopted' AND p.adoption_time_min >0
+GROUP BY tags
+ORDER BY avg_adoption_time_hr 
+
+2. Adoption time and type of dog breed (mixed vs. purebred)
+
+SELECT
+  mixed,
+  ROUND(AVG(adoption_time_min/60),2) avg_adoption_time_hr,
+  ROUND(AVG(adoption_time_min/1440),2) avg_adoption_time_day
+FROM `dog-adoption-411418.adoption.dog_profiles`
+WHERE status='adopted' AND adoption_time_min >0
+GROUP BY mixed
+ORDER BY avg_adoption_time_hr 
+
+3. Adoption time and dog breed
+
+SELECT
+  primary_breed,
+  ROUND(AVG(adoption_time_min)/60,2) avg_adoption_time_hr,
+  ROUND(AVG(adoption_time_min)/1440,2) avg_adoption_time_day
+FROM `dog-adoption-411418.adoption.dog_profiles`
+WHERE status='adopted'AND adoption_time_min > 0
+GROUP BY primary_breed
+ORDER BY avg_adoption_time_hr
+
+4. Adoption time and age
+
+SELECT
+  age,
+  ROUND(AVG(adoption_time_min)/60,2) avg_adoption_time_hr,
+  ROUND(AVG(adoption_time_min)/1440,2) avg_adoption_time_day
+FROM `dog-adoption-411418.adoption.dog_profiles`
+WHERE status='adopted'AND adoption_time_min > 0
+GROUP BY age
+ORDER BY avg_adoption_time_hr
+
+5. Adoption time and gender
+
+SELECT
+  gender,
+  ROUND(AVG(adoption_time_min)/60,2) avg_adoption_time_hr,
+  ROUND(AVG(adoption_time_min)/1440,2) avg_adoption_time_day
+FROM `dog-adoption-411418.adoption.dog_profiles`
+WHERE status='adopted'AND adoption_time_min > 0
+GROUP BY gender
+ORDER BY avg_adoption_time_hr
+
+6. Adoption time and special needs dogs
+
+SELECT
+  special_needs,
+  ROUND(AVG(adoption_time_min)/60,2) avg_adoption_time_hr,
+  ROUND(AVG(adoption_time_min)/1440,2) avg_adoption_time_days
+FROM `dog-adoption-411418.adoption.dog_profiles`
+WHERE status='adopted'AND adoption_time_min > 0
+GROUP BY special_needs
+ORDER BY avg_adoption_time_min
+
+
+
+7. Adoption time and dog size
+
+SELECT
+  size,
+  ROUND(AVG(adoption_time_min/60),2) avg_adoption_time_hr,
+  ROUND(AVG(adoption_time_min)/1440,2) avg_adoption_time_day
+FROM `dog-adoption-411418.adoption.dog_profiles`
+WHERE status='adopted' AND adoption_time_min >0
+GROUP BY size
+ORDER BY avg_adoption_time_hr
+
+8. States and adoption time
+
+SELECT
+  state,
+  ROUND(AVG(adoption_time_min/60),2) avg_adoption_time_hr,
+  ROUND(AVG(adoption_time_min)/1440,2) avg_adoption_time_day
+FROM `dog-adoption-411418.adoption.dog_profiles`
+WHERE status='adopted' AND adoption_time_min >0
+GROUP BY state
+ORDER BY avg_adoption_time_hr
+
+
+
+
+
+
 
