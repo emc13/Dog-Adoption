@@ -71,3 +71,13 @@ CREATE TABLE IF NOT EXISTS dog-adoption-411418.adoption.dog_profiles AS
     tertiary_color
 FROM `dog-adoption-411418.adoption.profiles`)
 
+Validation in BigQuery
+
+1. confirming all dog profiles are unique and there are no duplicates
+
+SELECT
+ COUNT(id),
+ COUNT(DISTINCT id)
+FROM dog_profiles
+
+
