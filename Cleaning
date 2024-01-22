@@ -1,1 +1,73 @@
+Google Sheets:
+
+1. Fixing and formatting date columns in the dog profiles table
+  * separated dates from “published_at” “status_changed_at” into columns for month, day, and year
+  * concated those and formatted into dates
+  * deleted original columns
+
+2. Separating tags in the tags table
+  * used concatenate function to create a tags column
+    ex. =CONCATENATE(B656,", ",C656,", ",D656,", ",E656,", ",F656)
+  * used conditional formatting to highlight the dog profiles that have tags
+  * used countif to validate the number of dogs with tags and the new tags column
+  
+3. made state column in the dog profiles table
+  * states are identified as the first 2 letters in the organization_id
+  * =LEFT(C3,2)
+
+4. made ‘primary_breed’, ‘secondary_breed’, and ‘mixed’ columns from the original ‘breed’ column in the dog profiles table
+  * used the ‘split text to column’ function with " , " as the delimiter
+
+5. made ‘primary_color’, ‘secondary_color’, and ‘tertiary_color’ columns from the original ‘colors’ column in the dog profiles table
+  * used the ‘split text to column’ function with " , " as the delimiter
+
+6. split up the ‘attributes’ column in the dog profiles table into 5 separate boolean columns
+  * used =IF(COUNTIF(J3,"*spayed_neutered': 'False'*"),"False","True") to take the messy data in the ‘attributes’ column into the 5 new separate columns
+  * split tags by using split to text and “ ' “ as the delimiter
+  * new columns
+    - spayed_neutered
+    - house_trained
+    - declawed
+    - special_needs
+    - shots_current
+
+Validation in Google Sheets:
+
+1. used filters on age, gender, size and coat to make sure those entries were correct and not mispelled etc.
+
+2. made sure mixed breed dogs were marked as ‘TRUE’ in the mixed column
+  * used formula
+    =IF(COUNTIF(F2, "<>*None*") + COUNTIF(E2, "*Mixed Breed*"), "TRUE", "FALSE")
+
+
+BigQuery:
+
+1. Creating a new dog_profiles table with an adoption time column and removing irrelevant columns from the original table
+
+CREATE TABLE IF NOT EXISTS dog-adoption-411418.adoption.dog_profiles AS 
+  (SELECT 
+    id,
+    name,
+    age,
+    gender,
+    size,
+    state,
+    status,
+    DATE_DIFF(status_changed_at,published_at,day) adoption_time,
+    status_changed_at,
+    published_at,
+    organization_id,
+    spayed_neutered,
+    house_trained,
+    declawed,
+    shots_current,
+    special_needs,
+    coat,
+    primary_breed,
+    secondary_breed,
+    mixed,
+    primary_color,
+    secondary_color,
+    tertiary_color
+FROM `dog-adoption-411418.adoption.profiles`)
 
