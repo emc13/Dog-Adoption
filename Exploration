@@ -1,1 +1,16 @@
+1. Number of total dogs, and adopted dogs
 
+SELECT 
+  COUNT(id) total_dogs,
+  COUNTIF(status='adopted') num_adopted
+FROM dog_profiles
+
+2. Number of total dogs, and adopted dogs by organization
+
+SELECT
+  organization_id,
+  COUNT(id) total_dogs,
+  COUNTIF(status='adopted') num_adopted
+FROM dog_profiles
+GROUP BY organization_id
+ORDER BY num_adopted DESC
