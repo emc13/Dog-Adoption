@@ -63,5 +63,6 @@ This repository contains code I wrote to clean, explore and analyze dog adoption
 ## Notes
 - Dogs with an age of "baby" are puppies. I kept the dataset's initial classification and used this term in my analysis and findings
 - I defined adoption time as the time between when a dog's adoption ad is posted and the dog's status is changed
+   - an adoption time of 0, means the dog's status hasn't changed and it hasn't been adopted
 
 Data Source: https://www.kaggle.com/datasets/velazquezelsa/petadoption
