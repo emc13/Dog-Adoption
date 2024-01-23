@@ -79,7 +79,21 @@ FROM `dog-adoption-411418.adoption.dog_profiles`
 GROUP BY size
 ORDER BY num_adopted DESC
 
-8. Adoption rate by state
+8. Adoption rates by whether the primary breed is a 'bully breed'
+
+SELECT
+CASE
+  WHEN primary_breed IN('American Bulldog','American Staffordshire Terrier','Boxer','Bullmastiff','English Bulldog','Pit Bull Terrier','Pug','Rottweiler','Staffordshire Bull Terrier','Dogue de Bordeaux')
+  THEN 'true'
+  ELSE 'false'
+  END AS bully_breed,
+COUNTIF(status='adopted') num_adopted,
+ROUND(100*(COUNTIF(status='adopted')/COUNT(id)),2) percent_adopted,
+COUNT(id) num_of_dogs
+FROM `dog-adoption-411418.adoption.dog_profiles`
+GROUP BY bully_breed
+
+9. Adoption rate by state
 
 SELECT
   state,
@@ -93,7 +107,7 @@ ORDER BY state
 
 ### Analyzing Adoption times (how long it takes for a dog to be adopted)
 
-1. Adoption time and profile tags
+1. Average adoption time and profile tags
 
 SELECT
   CASE
@@ -108,7 +122,7 @@ WHERE p.status='adopted' AND p.adoption_time_min >0
 GROUP BY tags
 ORDER BY avg_adoption_time_hr 
 
-2. Adoption time and type of dog breed (mixed vs. purebred)
+2. Average adoption time and type of dog breed (mixed vs. purebred)
 
 SELECT
   mixed,
@@ -119,7 +133,7 @@ WHERE status='adopted' AND adoption_time_min >0
 GROUP BY mixed
 ORDER BY avg_adoption_time_hr 
 
-3. Adoption time and dog breed
+3. Average adoption time and dog breed
 
 SELECT
   primary_breed,
@@ -130,7 +144,7 @@ WHERE status='adopted'AND adoption_time_min > 0
 GROUP BY primary_breed
 ORDER BY avg_adoption_time_hr
 
-4. Adoption time and age
+4. Average adoption time and age
 
 SELECT
   age,
@@ -141,7 +155,7 @@ WHERE status='adopted'AND adoption_time_min > 0
 GROUP BY age
 ORDER BY avg_adoption_time_hr
 
-5. Adoption time and gender
+5. Average adoption time and gender
 
 SELECT
   gender,
@@ -152,7 +166,7 @@ WHERE status='adopted'AND adoption_time_min > 0
 GROUP BY gender
 ORDER BY avg_adoption_time_hr
 
-6. Adoption time and special needs dogs
+6. Average adoption time and special needs dogs
 
 SELECT
   special_needs,
@@ -163,7 +177,7 @@ WHERE status='adopted'AND adoption_time_min > 0
 GROUP BY special_needs
 ORDER BY avg_adoption_time_min
 
-7. Adoption time and dog size
+7. Average adoption time and dog size
 
 SELECT
   size,
@@ -174,7 +188,7 @@ WHERE status='adopted' AND adoption_time_min >0
 GROUP BY size
 ORDER BY avg_adoption_time_hr
 
-8. States and adoption time
+8. States and average adoption time
 
 SELECT
   state,
@@ -185,6 +199,19 @@ WHERE status='adopted' AND adoption_time_min >0
 GROUP BY state
 ORDER BY avg_adoption_time_hr
 
+9. Average doption time by whether the primary breed is a 'bully breed'
+
+SELECT
+  CASE
+    WHEN primary_breed IN('American Bulldog','American Staffordshire Terrier','Boxer','Bullmastiff','English Bulldog','Pit Bull Terrier','Pug','Rottweiler','Staffordshire Bull Terrier','Dogue de Bordeaux')
+    THEN 'true'
+    ELSE 'false'
+  END AS bully_breed,
+  ROUND(AVG(adoption_time_min)/60,2) avg_adoption_time_hr,
+  ROUND(AVG(adoption_time_min)/1440,2) avg_adoption_time_day
+FROM `dog-adoption-411418.adoption.dog_profiles`
+WHERE status='adopted'AND adoption_time_min > 0
+GROUP BY bully_breed
 
 
 
