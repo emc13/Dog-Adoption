@@ -1,9 +1,9 @@
-1. Number of total dogs, and adopted dogs
+1. Number of all dogs, and adopted dogs
 
 SELECT 
   COUNT(id) total_dogs,
   COUNTIF(status='adopted') num_adopted
-FROM dog_profiles
+FROM `dog-adoption-411418.adoption.dog_profiles`
 
 2. Number of total dogs, and adopted dogs by organization
 
@@ -11,7 +11,7 @@ SELECT
   organization_id,
   COUNT(id) total_dogs,
   COUNTIF(status='adopted') num_adopted
-FROM dog_profiles
+FROM `dog-adoption-411418.adoption.dog_profiles`
 GROUP BY organization_id
 ORDER BY num_adopted DESC
 
@@ -24,3 +24,43 @@ SELECT
 FROM `dog-adoption-411418.adoption.dog_profiles`
 GROUP BY state
 ORDER BY num_adopted DESC
+
+4. Number of dogs by primary breed
+
+SELECT 
+  DISTINCT primary_breed,
+  COUNT(id) num_of_dogs
+FROM `dog-adoption-411418.adoption.dog_profiles`
+GROUP BY primary_breed
+
+5. List of all primary breeds
+
+SELECT
+  DISTINCT primary_breed
+FROM `dog-adoption-411418.adoption.dog_profiles`
+ORDER BY primary_breed
+
+6. List of all secondary breeds
+
+SELECT
+  DISTINCT secondary_breed
+FROM `dog-adoption-411418.adoption.dog_profiles`
+ORDER BY secondary_breed
+
+
+7. Number of dogs by whether they're a 'bully breed'
+
+SELECT 
+CASE
+    WHEN primary_breed IN('American Bulldog','American Staffordshire Terrier','Boxer','Bullmastiff','English Bulldog','Pit Bull Terrier','Pug','Rottweiler','Staffordshire Bull Terrier','Dogue de Bordeaux')
+    THEN 'true'
+    ELSE 'false'
+  END AS bully_breed,
+COUNT(id) num_of_dogs
+FROM `dog-adoption-411418.adoption.dog_profiles`
+GROUP BY bully_breed
+
+
+
+
+
