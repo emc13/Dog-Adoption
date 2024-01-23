@@ -29,8 +29,12 @@ This repository contains code I wrote to clean, explore and analyze dog adoption
    * purebred dogs have higher adoption rates than mixed-breed dogs
      * 74.64% of purebred dogs were adopted
      * 63.82% of mixed-breed dogs were adopted
+
     
-  
+5. Bully breeds
+   * dogs whose primary breed is a bully breed have lower adoption rates
+     * 50.93% of bully breed dogs were adopted
+     * 73.45% of non-bully breed dogs were adopted
 
 ### Factors associated with adoption time
 
@@ -59,10 +63,16 @@ This repository contains code I wrote to clean, explore and analyze dog adoption
      * senior dogs: 11.83 days
 
 
+4. Bully breeds
+   * dogs whose primary breed is a bully breed longer average adoption times than non-bully breed dogs
+   * average adoption times (in days):
+     * bully breed dogs: 10.4 days
+     * non-bully breed dogs: 8.09 days
 
 ## Notes
 - Dogs with an age of "baby" are puppies. I kept the dataset's initial classification and used this term in my analysis and findings
 - I defined adoption time as the time between when a dog's adoption ad is posted and the dog's status is changed
    - an adoption time of 0, means the dog's status hasn't changed and it hasn't been adopted
+- I defined bully breeds using the list of bully breeds from https://tomkingskennel.com/bully-breeds/
 
 Data Source: https://www.kaggle.com/datasets/velazquezelsa/petadoption
