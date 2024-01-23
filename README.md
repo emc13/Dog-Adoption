@@ -75,4 +75,4 @@ This repository contains code I wrote to clean, explore and analyze dog adoption
    - an adoption time of 0, means the dog's status hasn't changed and it hasn't been adopted
 - I defined bully breeds using the list of bully breeds from https://tomkingskennel.com/bully-breeds/
 
-Data Source: https://www.kaggle.com/datasets/velazquezelsa/petadoption
+### Data Source: https://www.kaggle.com/datasets/velazquezelsa/petadoption
