@@ -64,7 +64,7 @@ SELECT
   COUNTIF(status='adopted') num_adopted,
   ROUND(100*(COUNTIF(status='adopted')/COUNT(id)),2) percent_adopted,
   COUNT(id) num_dogs
-FROM `dog-adoption-411418.adoption.dog_profiles
+FROM `dog-adoption-411418.adoption.dog_profiles'
 GROUP BY special_needs
 ORDER BY num_adopted DESC
 
@@ -79,11 +79,19 @@ FROM `dog-adoption-411418.adoption.dog_profiles`
 GROUP BY size
 ORDER BY num_adopted DESC
 
-8. States and adoption rates
+8. Adoption rate by state
+
+SELECT
+  state,
+  COUNTIF(status='adopted') num_adopted,
+  ROUND(100*(COUNTIF(status='adopted')/COUNT(id)),2) percent_adopted,
+  COUNT(id) num_of_dogs
+FROM `dog-adoption-411418.adoption.dog_profiles`
+GROUP BY state
+ORDER BY state
 
 
 ### Analyzing Adoption times (how long it takes for a dog to be adopted)
-
 
 1. Adoption time and profile tags
 
@@ -154,8 +162,6 @@ FROM `dog-adoption-411418.adoption.dog_profiles`
 WHERE status='adopted'AND adoption_time_min > 0
 GROUP BY special_needs
 ORDER BY avg_adoption_time_min
-
-
 
 7. Adoption time and dog size
 
